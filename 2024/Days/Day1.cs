@@ -24,7 +24,7 @@ internal class Day1
 
     private static (int left, int right)[] ReadInputs()
     {
-        ReadOnlySpan<string> inputs = File.ReadAllLines("Inputs/input-day1.txt");
+        ReadOnlySpan<string> inputs = File.ReadAllLines("inputs/day1.txt");
         Span<Range> ranges = stackalloc Range[2];
 
         List<int> left = new(inputs.Length);
