@@ -15,4 +15,4 @@ Console.WriteLine($"Part 2: {day2.SolvePartTwo()}\r\n");
 Day3 day3 = new();
 Console.WriteLine("Day 3");
 Console.WriteLine($"Part 1: {day3.SolvePartOne()}");
-//Console.WriteLine($"Part 2: {day3.SolvePartTwo()}\r\n");
+Console.WriteLine($"Part 2: {day3.SolvePartTwo()}\r\n");
