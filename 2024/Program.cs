@@ -26,3 +26,8 @@ Day5 day5 = new();
 Console.WriteLine("Day 5");
 Console.WriteLine($"Part 1: {day5.SolvePartOne()}");
 Console.WriteLine($"Part 2: {day5.SolvePartTwo()}\r\n");
+
+Day6 day6 = new();
+Console.WriteLine("Day 6");
+Console.WriteLine($"Part 1: {day6.SolvePartOne()}");
+Console.WriteLine($"Part 2: {day6.SolvePartTwo()}\r\n");
