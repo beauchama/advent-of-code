@@ -13,13 +13,11 @@ internal sealed class Day6
 
     public int SolvePartOne()
     {
-        Guard.Direction direction = Guard.Direction.Up;
-
-        while(_guard.Position.X < _map.Length - 1 && _guard.Position.Y < _map[_guard.Position.X].Length - 1)
+        while(IsInBounds(_map, _guard.Position))
         {
             (int x, int y) = _guard.Position;
 
-            char current = direction switch
+            char current = _guard.CurrentDirection switch
             {
                 Guard.Direction.Up => _map[x - 1][y],
                 Guard.Direction.Down => _map[x + 1][y],
@@ -28,16 +26,19 @@ internal sealed class Day6
                 _ => throw new InvalidOperationException()
             };
 
-            if (current == Obstacle)
-                direction = _guard.Turn();
-            else
-            {
+            if (_guard.TryMove(current == Obstacle))
                 _map[x][y] = 'X';
-                _guard.Move();
-            }
         }
 
         return _map.Sum(row => row.Count(cell => cell == 'X')) + 1;
+
+        static bool IsInBounds(char[][] map, Guard.Point position)
+        {
+            return position.X > 0
+                && position.X < map.Length - 1
+                && position.Y > 0
+                && position.Y < map[position.X].Length - 1;
+        }
     }
 
     public int SolvePartTwo()
@@ -75,8 +76,16 @@ internal sealed class Day6
 
         public Point Position => _position;
 
-        public void Move()
+        public Direction CurrentDirection => _direction;
+
+        public bool TryMove(bool hasObstacle)
         {
+            if (hasObstacle)
+            {
+                Turn();
+                return false;
+            }
+
             _position = _direction switch
             {
                 Direction.Up => _position with { X = _position.X - 1 },
@@ -85,9 +94,11 @@ internal sealed class Day6
                 Direction.Right => _position with { Y = _position.Y + 1 },
                 _ => throw new InvalidOperationException()
             };
+
+            return true;
         }
 
-        public Direction Turn()
+        private void Turn()
         {
             _direction = _direction switch
             {
@@ -97,8 +108,6 @@ internal sealed class Day6
                 Direction.Left => Direction.Up,
                 _ => throw new InvalidOperationException()
             };
-
-            return _direction;
         }
 
         public enum Direction
